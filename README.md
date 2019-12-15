@@ -1,5 +1,30 @@
 # SM-Analytics
 
+### Getting Started
+
+- HTTP server runs on port 8000. 
+- Clone the repo.
+- Istio should be running in your local system.
+- Install minikube, and follow this link ```https://istio.io/docs/setup/platform-setup/minikube/```
+- - Deploy a Destination Rule for CBR.
+```
+ curl -XPOST -H "Content-type: application/json" -d '{
+	"name": "cbr",
+	"namespace": "default",
+	"host": "host.svc.cluster.local",
+	"tcpMaxConnections": 1,
+	"httpMaxConnections": 2,
+	"http2MaxConnections": 0,
+	"consecutiveError": 1,
+	"interval": 1,
+	"baseEjectionTime": 180s,
+	"maxEjectionPercent":1
+	
+}' 'localhost:8000/api/v1/cbr'
+```
+- See CIRCUITBREAK.md for more.
+
+
 ### Fault Domain
 
 - A fault domain consists of the following aspects related to microservices :
