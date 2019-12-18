@@ -46,6 +46,51 @@ Request Timeouts
 ```
 [2019-12-10T13:12:57.245Z] "GET /status/418 HTTP/1.1" 418 - "-" "-" 0 135 1 1 "-" "curl/7.64.0" "538be813-30b7-467f-b0c7-63b3bf451af0" "httpbin:8000" "127.0.0.1:80" inbound|8000|http|httpbin.bookinfo.svc.cluster.local - 100.99.7.120:80 100.99.50.3:46996 - default
 ```
+### Mixer Log
+
+- An end to end trace of how a request traverses from ingress gateway to a pod through istio-proxy.
+
+```
+connection.mtls               : false
+context.protocol              : http
+context.reporter.kind         : outbound
+context.reporter.uid          : kubernetes://istio-ingressgateway-cbc9c69b6-r7qfd.istio-system
+destination.service.host      : helloworld.default.svc.cluster.local
+destination.service.name      : helloworld
+destination.service.namespace : default
+destination.service.uid       : istio://default/services/helloworld
+origin.ip                     : [10 0 83 159]
+request.headers               : stringmap[accept:*/* user-agent:curl/7.58.0 x-forwarded-for:10.0.83.159 x-request-id:99d7fe58-8d26-491a-a60c-2ca6a4ea1cdc :authority:a883d391e757c11e9a86a06538fac772-1465315514.us-west-2.elb.amazonaws.com x-envoy-internal:true :method:GET :path:/hello x-forwarded-proto:http x-envoy-decorator-operation:helloworld.default.svc.cluster.local:5000/hello]
+request.host                  : a883d391e757c11e9a86a06538fac772-1465315514.us-west-2.elb.amazonaws.com
+request.method                : GET
+request.path                  : /hello
+request.scheme                : http
+request.time                  : 2019-05-14 18:03:48.431822233 +0000 UTC
+request.url_path              : /hello
+request.useragent             : curl/7.58.0
+source.namespace              : istio-system
+source.uid                    : kubernetes://istio-ingressgateway-cbc9c69b6-r7qfd.istio-system
+---
+destination.container.name    : unknown
+destination.ip                : [0 0 0 0 0 0 0 0 0 0 255 255 0 0 0 0]
+destination.labels            : stringmap[]
+destination.name              : unknown
+destination.namespace         : default
+destination.owner             : unknown
+destination.serviceAccount    : unknown
+destination.uid               : unknown
+destination.workload.name     : unknown
+destination.workload.namespace: unknown
+destination.workload.uid      : unknown
+source.ip                     : [0 0 0 0 0 0 0 0 0 0 255 255 100 121 215 132]
+source.labels                 : stringmap[pod-template-hash:767572562 release:istio app:istio-ingressgateway chart:gateways heritage:Tiller istio:ingressgateway]
+source.name                   : istio-ingressgateway-cbc9c69b6-r7qfd
+source.owner                  : kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway
+source.serviceAccount         : istio-ingressgateway-service-account
+source.workload.name          : istio-ingressgateway
+source.workload.namespace     : istio-system
+source.workload.uid           : istio://istio-system/workloads/istio-ingressgateway
+```
 
 ### Understanding the Log
 
